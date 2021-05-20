@@ -7,15 +7,21 @@ class Carla():
         self.client = carla.Client(host,ip)
         self.world = self.client.get_world()
 
-    def load_world(self, world_name):
-        self.client.load_world('/Game/Carla/Maps/Town02')
+    def load_world(self, world_name = '/Game/Carla/Maps/Town02'):
+        self.client.load_world(world_name)
         self.world = self.get_world()
+
+    def set_world_settings(self, carla_settings):
+        self.world.apply_settings(carla_settings)
+
+    def set_weather(self, weather_config):
+        self.world.set_weather(weather_config)
+
+    def tick(self):
+        return self.world.tick()
 
     def get_available_worlds(self):
         return self.client.get_available_maps()
-    
-    def wait_for_tick(self):
-        self.world.wait_for_tick()
 
     def get_snapshot(self):
         return self.world.get_snapshot()
@@ -29,7 +35,7 @@ class Carla():
     def get_random_location_from_navigation(self):
         return self.world.get_random_location_from_navigation()
 
-    def getBaseTransform(self):
+    def get_base_tansform(self):
         return carla.Transform()
 
     def get_actor(self, actor_id):
@@ -59,6 +65,10 @@ class Carla():
     def get_spawn_points(self):
         return self.world.get_map().get_spawn_points()
 
+    def get_spectator_transform(self):
+        spectator_actor = self.world.get_spectator()
+        return spectator_actor.get_transform()
+
     def command_spawn_actor(self, blueprint, spawn_point, parent = None):
         if parent is None:
             return carla.command.SpawnActor(blueprint, spawn_point)
@@ -75,7 +85,19 @@ class Carla():
         return self.client.apply_batch_sync(commands, True)
 
     def try_spawn_actor(self, blueprint, spawn_point):
-        self.world.try_spawn_actor(blueprint, spawn_point)
+        self.world.try_spawn_actor(blueprint, spawn_point)    
 
-    def set_weather(self, weather_config):
-        self.world.set_weather(weather_config)
+    def simulateFrame(self, simFrame):
+    # Output statistics to see where we are
+        tenthNumFrames = (self.dataGatherParams.numFrames / 10) if self.dataGatherParams.numFrames > 0 else None
+        if tenthNumFrames and simFrame % tenthNumFrames == 0:
+            print(f"{(simFrame * 10.0) / tenthNumFrames}%...")
+        # Tick the  world
+        worldFrame = self.world.tick()
+        # Now take the actors and update the data and add the date for this frame
+        self.addFrameData(simFrame, worldFrame, self.vehicles_data, self.pedestrians_data)
+        # Advance the simulation and wait for the data.
+        # logging.log(logging.INFO, f"Getting data for frame {worldFrame}")
+        syncData = self.dataManager.tick(targetFrame=worldFrame, timeout=None)  # self.EnvSettings.TIMEOUT_VALUE * 100.0) # Because sometimes you forget to put the focus on server and BOOM
+        # logging.log(logging.INFO, f"Data retrieved for frame {worldFrame}")
+        return self.getFrameData(simFrame), syncData
