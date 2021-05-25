@@ -30,7 +30,6 @@ class Walker:
         self.controller.start()
 
     def set_destination(self, target_location):
-        print(self.controller)
         self.controller.go_to_location(target_location)
     
     def set_max_speed(self, max_speed):
@@ -46,6 +45,9 @@ class Walker:
 
     def set_targets(self, targets):
         self.targets = targets
+
+    def get_trace_length(self):
+        return len(self.trace)
 
     def has_enough_trace(self):
         return len(self.trace) == 8

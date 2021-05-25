@@ -1,6 +1,9 @@
 
+from typing import List
+from libs.Carla import Carla
 from libs.Spawner import  SpawnPedestriansAtLocations, GetSpawnPointsNearLocation
 from libs.Behaviours import LSTMBehavior
+from libs.Walker import Walker
 
 def spawnWalkers(carla_client, num_agents):
     spectator_transform = carla_client.get_spectator_transform()
@@ -25,7 +28,7 @@ def buildPipeline():
     return action_pipeline
 
 
-def simulateStep(carla_client, walkers, action_pipeline, step=10):
+def simulateStep(carla_client : Carla, walkers : List[Walker], action_pipeline : List[any], step: int = 10):
     tick = carla_client.tick()
     if(tick % step == 0):
         for action in action_pipeline:

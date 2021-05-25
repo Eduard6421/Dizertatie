@@ -77,7 +77,7 @@ def SpawnPedestrians(carla_client, num_agents):
             controller  = carla_client.get_actor(walker.controller_id)
             controller.start()
 
-            #controller.go_to_location(carla_client.get_random_location_from_navigation())
+            #controller.tion(carla_client.get_random_location_from_navigation())
 
             walker.set_actor(actor)
             walker.set_controller(controller)
@@ -149,7 +149,7 @@ def SpawnPedestriansWithTargets(carla_client, num_agents):
             controller  = carla_client.get_actor(walker.controller_id)
             controller.start()
 
-            controller.go_to_location(carla_client.get_random_location_from_navigation())
+            controller.tion(carla_client.get_random_location_from_navigation())
 
             walker.set_actor(actor)
             walker.set_controller(controller)
@@ -158,7 +158,6 @@ def SpawnPedestriansWithTargets(carla_client, num_agents):
         DespawnPedestrians(carla_client, walkers)
 
     return walkers
-
 
 
 def SpawnPedestriansAtLocations(carla_client :Carla, walker_spawn_locations, num_agents):
@@ -237,7 +236,7 @@ def GetSpawnPointsNearLocation(carla_client : Carla, location, num_spawnpoints):
 
     spawn_points_and_distances_sorted = sorted(spawn_points_and_distances, key = lambda SpawnAndDistance : SpawnAndDistance[1])
 
-    shortestDist = 2
+    shortestDist = 1.5
 
     spawn_points = []
     unselected_spawn_points = []
@@ -255,7 +254,6 @@ def GetSpawnPointsNearLocation(carla_client : Carla, location, num_spawnpoints):
 
         if current_lowest_dist > shortestDist:
             spawn_points.append(potential_point)
-            print(current_lowest_dist)
         else:
             unselected_spawn_points.append(potential_point)
 
@@ -264,7 +262,6 @@ def GetSpawnPointsNearLocation(carla_client : Carla, location, num_spawnpoints):
 
     if(len(spawn_points) < num_spawnpoints):
         num_additional_spawn_points = num_spawnpoints - len(spawn_points)
-        print(num_additional_spawn_points)
 
         spawn_points.extend(unselected_spawn_points[:num_additional_spawn_points])
 

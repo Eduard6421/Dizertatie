@@ -11,18 +11,17 @@ from libs.Spawner import DespawnPedestrians
 
 carla_client = Carla('localhost', 2000)
 
-
 def __main__():
 
-    carla_settings  = SettingsBuilder.get_world_config()
+    carla_settings  = SettingsBuilder.get_sync_world_confing()
     carla_client.set_world_settings(carla_settings)
 
     #weather_config= WeatherBuilder.get_weather_config()
     #carla_client.set_weather(weather_config)
 
     walkers = None
-    num_agents = 100
-    step = 10
+    num_agents = 10
+    step = 50
 
     try:
 
@@ -30,12 +29,13 @@ def __main__():
         action_pipeline = buildPipeline()
 
         while True:
-            simulateStep(carla_client,action_pipeline,step)
-            print('ran tick')
+                simulateStep(carla_client, walkers, action_pipeline, step)
 
     except KeyboardInterrupt:
         pass
     finally:
+        carla_settings  = SettingsBuilder.get_async_world_config()
+        carla_client.set_world_settings(carla_settings)
         DespawnPedestrians(carla_client,walkers)
         print('Despawned')
 
