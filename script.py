@@ -1,12 +1,14 @@
 
 import time
 import carla
+import numpy as np
 
 from libs.Carla import Carla
 from libs.WeatherBuilder import WeatherBuilder
 from libs.SettingsBuilder import SettingsBuilder
 from libs.Controller import buildPipeline, simulateStep, spawnWalkers
 from libs.Spawner import DespawnPedestrians
+from libs.Inference import runSGANInference
 
 
 carla_client = Carla('localhost', 2000)
@@ -21,7 +23,7 @@ def __main__():
 
     walkers = None
     num_agents = 10
-    step = 50
+    step = 15
 
     try:
 
@@ -42,3 +44,4 @@ def __main__():
 
 if __name__ == "__main__":
     __main__()
+

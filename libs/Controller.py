@@ -2,7 +2,7 @@
 from typing import List
 from libs.Carla import Carla
 from libs.Spawner import  SpawnPedestriansAtLocations, GetSpawnPointsNearLocation
-from libs.Behaviours import LSTMBehavior
+from libs.Behaviours import LSTMBehavior, SGANBehaviour
 from libs.Walker import Walker
 
 def spawnWalkers(carla_client, num_agents):
@@ -17,10 +17,11 @@ def buildPipeline():
 
 
     lstmBehaviour = LSTMBehavior()
+    sganBehaviour = SGANBehaviour()
 
     action_pipeline = [
         lstmBehaviour
-        #
+        #sganBehaviour
         #
         #
     ]

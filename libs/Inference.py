@@ -1,5 +1,9 @@
 from sociallstm.run_lstm import run_script
+from sgan.run_inference import run_script
+
+def runSocialLSTMInference(data):
+    return run_script(data)
 
 
-def runSocialLSTMInference(data,exact_number):
-    return run_script(data,exact_number)
+def runSGANInference(data):
+    return  run_script(data)
