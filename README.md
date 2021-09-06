@@ -1,5 +1,4 @@
 Master Thesis
-Poesina Eduard Gabriel
 
 Natural Behaviour Predictor
 
@@ -21,8 +20,3 @@ To make use of the software
 
 
 To select which technique you want to showcase modify the Controller script to by adding in the action pipeline the behaviours you want.
-
-
-
-Science Coordinator
-Lect. Dr. Paduraru Ciprian Ionut
