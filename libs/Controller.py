@@ -16,14 +16,11 @@ def spawnWalkers(carla_client, num_agents):
 def buildPipeline():
 
 
-    lstmBehaviour = LSTMBehavior()
+    #lstmBehaviour = LSTMBehavior()
     sganBehaviour = SGANBehaviour()
 
     action_pipeline = [
-        lstmBehaviour
-        #sganBehaviour
-        #
-        #
+        sganBehaviour
     ]
 
     return action_pipeline
@@ -32,6 +29,7 @@ def buildPipeline():
 def simulateStep(carla_client : Carla, walkers : List[Walker], action_pipeline : List[any], step: int = 10):
     tick = carla_client.tick()
     if(tick % step == 0):
+        print('hit at {}'.format(tick))
         for action in action_pipeline:
             action.act(walkers, tick)
 

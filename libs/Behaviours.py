@@ -76,6 +76,7 @@ class LSTMBehavior(BaseBehaviour):
                 new_target = carla.Location(x_target, y_target, z_target)
 
                 if(i == 0):
+                    print(walker.trace)
                     print('========== Agent {} ========'.format(walker.instance_id))
                     print("Current Location")
                     print(walker.actor.get_location())

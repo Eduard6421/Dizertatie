@@ -22,8 +22,8 @@ def __main__():
     #carla_client.set_weather(weather_config)
 
     walkers = None
-    num_agents = 10
-    step = 15
+    num_agents = 75
+    step = 1000
 
     try:
 

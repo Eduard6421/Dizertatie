@@ -1,7 +1,7 @@
 import pickle
 import json
 
-filePath = '/home/eduard/Private/carla/RLAgent/output/Town03/0/69/people.p'
+filePath = '/home/eduard/Private/carla/PythonAPI/Dizertatie/customdata/people/people.p'
 input_file = open(filePath,'rb')
 pedestrians_dict = pickle.load(input_file)
 
